@@ -1,0 +1,21 @@
+{
+  "openai": {
+    "gpt-4o": {
+      "description": "High-intelligence flagship model for complex tasks",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "multimodal": true
+    },
+    "gpt-4o-mini": {
+      "description": "Small model for fast, lightweight tasks",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "multimodal": true
+    },
+    "dall-e-3": {
+      "description": "Image generation model",
+      "context_window": null,
+      "multimodal": true
+    }
+  }
+}
