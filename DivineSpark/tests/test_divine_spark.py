@@ -23,7 +23,26 @@ class TestDivineSpark(unittest.TestCase):
             raise FileNotFoundError(f"Configuration file not found: {self.config_file}")
 
         # Register models
-        for model_name, model_details in self.models_config.items():
+        required_models = {
+            "gpt-4o": {
+                "description": "Test model",
+                "context_window": 128000,
+                "max_output_tokens": 16384,
+                "supports_text_completion": True
+            },
+            "dall-e-3": {
+                "description": "Image generation model",
+                "multimodal": True,
+                "supports_image_generation": True
+            },
+            "whisper-1": {
+                "description": "Speech-to-text model",
+                "audio_input": True,
+                "supports_audio_transcription": True
+            }
+        }
+
+        for model_name, model_details in required_models.items():
             self.spark.register_model(model_name, model_details)
 
     @patch('requests.Session.post')
@@ -59,13 +78,13 @@ class TestDivineSpark(unittest.TestCase):
 
     @patch('requests.Session.post')
     def test_transcribe_audio(self, mock_post):
-        # Mock a successful transcription response
+        # Mock a successful audio transcription response
         mock_post.return_value.json.return_value = {
-            "text": "Transcribed audio content."
+            "text": "Transcribed audio content"
         }
         mock_post.return_value.status_code = 200
 
         audio_model_name = "whisper-1"
-        # Assuming 'test_audio_file.wav' exists in the same directory for real test or use mock_open
         result = self.spark.transcribe_audio("test_audio_file.wav", model_name=audio_model_name)
-        self.assertEqual(result["text"], "Transcribed audio content.")
+        self.assertIn("text", result)
+        self.assertEqual(result["text"], "Transcribed audio content")

@@ -1,4 +1,5 @@
 import os
+import json  # Required for handling JSON data
 import unittest
 from DivineSpark.core.model_registry import ModelRegistry
 from DivineSpark.core.utils import Utils

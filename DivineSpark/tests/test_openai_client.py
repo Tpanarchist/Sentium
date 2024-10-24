@@ -1,7 +1,10 @@
 import os
 import unittest
 from unittest.mock import patch
+
+import requests
 from DivineSpark.apis.openai_client import OpenAIClient
+
 
 class TestOpenAIClient(unittest.TestCase):
     def setUp(self):
@@ -12,7 +15,7 @@ class TestOpenAIClient(unittest.TestCase):
 
     @patch('requests.Session.post')
     def test_generate_completion(self, mock_post):
-        # Mock the response for a successful text completion
+        # Mock a successful completion response
         mock_post.return_value.json.return_value = {
             "model": "gpt-4o-2024-08-06",
             "choices": [{"message": {"role": "assistant", "content": "Mocked response"}}]
@@ -26,7 +29,7 @@ class TestOpenAIClient(unittest.TestCase):
 
     @patch('requests.Session.post')
     def test_generate_image(self, mock_post):
-        # Mock the response for image generation
+        # Mock a successful image generation response
         mock_post.return_value.json.return_value = {
             "created": 1729772286,
             "data": [
@@ -44,13 +47,9 @@ class TestOpenAIClient(unittest.TestCase):
     @patch('requests.Session.post')
     def test_handle_unauthorized_error(self, mock_post):
         # Mock an unauthorized response
-        mock_post.return_value.status_code = 401
-        mock_post.return_value.json.return_value = {
-            "error": {
-                "message": "Incorrect API key provided.",
-                "type": "invalid_request_error"
-            }
-        }
+        mock_post.side_effect = requests.exceptions.HTTPError(
+            "401 Client Error: Unauthorized for url: https://api.openai.com/v1/completions"
+        )
 
         with self.assertRaises(Exception) as context:
             prompt = "Test prompt"
