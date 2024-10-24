@@ -17,22 +17,22 @@ class ModelRegistry:
 
     def list_models(self, api_name=None, filter_multimodal=None, filter_audio=None):
         models = self.models.get(api_name, {}) if api_name else self.models
-        
+    
         # Apply filters if specified
         if filter_multimodal is not None:
             models = {
                 api: {
                     name: details for name, details in api_models.items()
-                    if details.get("multimodal") == filter_multimodal
+                    if isinstance(details, dict) and details.get("multimodal") == filter_multimodal
                 }
                 for api, api_models in models.items()
             }
-        
+    
         if filter_audio is not None:
             models = {
                 api: {
                     name: details for name, details in api_models.items()
-                    if details.get("audio_input") == filter_audio or details.get("audio_output") == filter_audio
+                    if isinstance(details, dict) and (details.get("audio_input") == filter_audio or details.get("audio_output") == filter_audio)
                 }
                 for api, api_models in models.items()
             }
