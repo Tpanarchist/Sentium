@@ -1,21 +1,134 @@
 {
   "openai": {
-    "gpt-4o": {
-      "description": "High-intelligence flagship model for complex tasks",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "multimodal": true
+    "flagship_models": {
+      "gpt-4o": {
+        "description": "High-intelligence flagship model for complex tasks",
+        "context_window": 128000,
+        "max_output_tokens": 16384,
+        "multimodal": true,
+        "endpoint": "chat/completions"
+      },
+      "gpt-4o-mini": {
+        "description": "Small model for fast, lightweight tasks",
+        "context_window": 128000,
+        "max_output_tokens": 16384,
+        "multimodal": true,
+        "endpoint": "chat/completions"
+      }
     },
-    "gpt-4o-mini": {
-      "description": "Small model for fast, lightweight tasks",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "multimodal": true
+    "reasoning_models": {
+      "o1-preview": {
+        "description": "Reasoning model for complex problems",
+        "context_window": 128000,
+        "max_output_tokens": 32768,
+        "multimodal": false,
+        "endpoint": "chat/completions"
+      },
+      "o1-mini": {
+        "description": "Reasoning model optimized for coding and math",
+        "context_window": 128000,
+        "max_output_tokens": 65536,
+        "multimodal": false,
+        "endpoint": "chat/completions"
+      }
     },
-    "dall-e-3": {
-      "description": "Image generation model",
-      "context_window": null,
-      "multimodal": true
+    "gpt_series": {
+      "gpt-4-turbo": {
+        "description": "GPT-4 Turbo with vision capabilities",
+        "context_window": 128000,
+        "max_output_tokens": 4096,
+        "multimodal": true,
+        "endpoint": "chat/completions"
+      },
+      "gpt-4": {
+        "description": "GPT-4 for advanced reasoning tasks",
+        "context_window": 8192,
+        "max_output_tokens": 8192,
+        "multimodal": true,
+        "endpoint": "chat/completions"
+      },
+      "gpt-3.5-turbo": {
+        "description": "Inexpensive model for simple tasks",
+        "context_window": 16385,
+        "max_output_tokens": 4096,
+        "multimodal": false,
+        "endpoint": "chat/completions"
+      }
+    },
+    "image_models": {
+      "dall-e-3": {
+        "description": "Image generation model",
+        "context_window": null,
+        "multimodal": true,
+        "endpoint": "images/generations"
+      },
+      "dall-e-2": {
+        "description": "Second generation image generation model",
+        "context_window": null,
+        "multimodal": true,
+        "endpoint": "images/generations"
+      }
+    },
+    "audio_models": {
+      "tts-1": {
+        "description": "Real-time text to speech model",
+        "context_window": null,
+        "audio_output": true,
+        "endpoint": "audio/speech"
+      },
+      "tts-1-hd": {
+        "description": "High-quality text to speech model",
+        "context_window": null,
+        "audio_output": true,
+        "endpoint": "audio/speech"
+      },
+      "whisper-1": {
+        "description": "General-purpose speech recognition",
+        "context_window": null,
+        "audio_input": true,
+        "endpoint": "audio/transcriptions"
+      }
+    },
+    "embedding_models": {
+      "text-embedding-3-large": {
+        "description": "Advanced embedding model for English and non-English tasks",
+        "output_dimension": 3072,
+        "endpoint": "embeddings"
+      },
+      "text-embedding-3-small": {
+        "description": "Performance-optimized embedding model",
+        "output_dimension": 1536,
+        "endpoint": "embeddings"
+      },
+      "text-embedding-ada-002": {
+        "description": "Second generation embedding model",
+        "output_dimension": 1536,
+        "endpoint": "embeddings"
+      }
+    },
+    "moderation_models": {
+      "omni-moderation-latest": {
+        "description": "Multi-modal moderation model",
+        "context_window": 32768,
+        "endpoint": "moderations"
+      },
+      "text-moderation-latest": {
+        "description": "Text-only moderation model",
+        "context_window": 32768,
+        "endpoint": "moderations"
+      }
+    },
+    "base_models": {
+      "babbage-002": {
+        "description": "Base model replacement for GPT-3 ada and babbage",
+        "context_window": 16384,
+        "endpoint": "completions"
+      },
+      "davinci-002": {
+        "description": "Base model replacement for GPT-3 curie and davinci",
+        "context_window": 16384,
+        "endpoint": "completions"
+      }
     }
   }
 }
