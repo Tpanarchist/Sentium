@@ -1,4 +1,5 @@
 import json
+import os
 
 class Utils:
     @staticmethod
@@ -10,3 +11,7 @@ class Utils:
     def load_from_json(file_path):
         with open(file_path, 'r') as json_file:
             return json.load(json_file)
+
+    @staticmethod
+    def file_exists(file_path):
+        return os.path.exists(file_path)
