@@ -1,5 +1,5 @@
 import unittest
-from ..core.model_registry import ModelRegistry
+from DivineSpark.core.model_registry import ModelRegistry
 
 class TestModelRegistry(unittest.TestCase):
     def setUp(self):

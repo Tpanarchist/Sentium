@@ -1,5 +1,6 @@
 import unittest
-from ..core.divine_spark import DivineSpark
+from DivineSpark.core.divine_spark import DivineSpark
+
 
 class TestDivineSpark(unittest.TestCase):
     def setUp(self):
