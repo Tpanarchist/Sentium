@@ -1,134 +1,596 @@
 {
   "openai": {
-    "flagship_models": {
-      "gpt-4o": {
-        "description": "High-intelligence flagship model for complex tasks",
-        "context_window": 128000,
-        "max_output_tokens": 16384,
-        "multimodal": true,
-        "endpoint": "chat/completions"
+      "flagship_models": {
+          "gpt-4o": {
+              "description": "Our high-intelligence flagship model for complex, multi‑step tasks.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["text"]
+              },
+              "context_window": 128000,
+              "max_output_tokens": 16384,
+              "training_data": "Up to Oct 2023",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Higher"
+              },
+              "versions": {
+                  "current": "gpt-4o-2024-08-06",
+                  "history": {
+                      "gpt-4o-2024-05-13": {
+                          "description": "Original gpt-4o snapshot from May 13, 2024.",
+                          "context_window": 128000,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Oct 2023"
+                      }
+                  },
+                  "latest_snapshot": "gpt-4o-2024-08-06"
+              },
+              "additional_info": "GPT-4o is multimodal, efficient, and supports structured outputs."
+          },
+          "gpt-4o-mini": {
+              "description": "Our affordable and intelligent small model for fast, lightweight tasks.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["text"]
+              },
+              "context_window": 128000,
+              "max_output_tokens": 16384,
+              "training_data": "Up to Oct 2023",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Lower"
+              },
+              "versions": {
+                  "current": "gpt-4o-mini-2024-07-18",
+                  "history": {
+                      "gpt-4o-mini-2024-07-18": {
+                          "description": "gpt-4o-mini currently points to this version.",
+                          "context_window": 128000,
+                          "max_output_tokens": 16384,
+                          "training_data": "Up to Oct 2023"
+                      }
+                  },
+                  "latest_snapshot": "gpt-4o-mini-2024-07-18"
+              },
+              "additional_info": "GPT-4o-mini is multimodal, as capable as GPT-3.5-turbo, and more cost-effective."
+          },
+          "o1-preview": {
+              "description": "Language models trained with reinforcement learning to perform complex reasoning.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["text"]
+              },
+              "context_window": 128000,
+              "max_output_tokens": 32768,
+              "training_data": "Up to Oct 2023",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "current": "o1-preview-2024-09-12",
+                  "history": {
+                      "o1-preview-2024-09-12": {
+                          "description": "Latest o1 model snapshot.",
+                          "context_window": 128000,
+                          "max_output_tokens": 32768,
+                          "training_data": "Up to Oct 2023"
+                      }
+                  },
+                  "latest_snapshot": "o1-preview-2024-09-12"
+              },
+              "additional_info": "o1-preview is designed for solving hard problems across various domains."
+          },
+          "o1-mini": {
+              "description": "Faster and cheaper reasoning model particularly good at coding, math, and science.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["text"]
+              },
+              "context_window": 128000,
+              "max_output_tokens": 65536,
+              "training_data": "Up to Oct 2023",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Lower"
+              },
+              "versions": {
+                  "current": "o1-mini-2024-09-12",
+                  "history": {
+                      "o1-mini-2024-09-12": {
+                          "description": "Latest o1-mini model snapshot.",
+                          "context_window": 128000,
+                          "max_output_tokens": 65536,
+                          "training_data": "Up to Oct 2023"
+                      }
+                  },
+                  "latest_snapshot": "o1-mini-2024-09-12"
+              },
+              "additional_info": "o1-mini excels in coding, math, and science tasks with enhanced speed and cost-efficiency."
+          }
       },
-      "gpt-4o-mini": {
-        "description": "Small model for fast, lightweight tasks",
-        "context_window": 128000,
-        "max_output_tokens": 16384,
-        "multimodal": true,
-        "endpoint": "chat/completions"
+      "other_models": {
+          "gpt-4-turbo": {
+              "description": "The latest GPT-4 Turbo model with vision capabilities.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["text"]
+              },
+              "context_window": 128000,
+              "max_output_tokens": 4096,
+              "training_data": "Up to Dec 2023",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Higher"
+              },
+              "versions": {
+                  "current": "gpt-4-turbo-2024-04-09",
+                  "history": {
+                      "gpt-4-turbo-2024-04-09": {
+                          "description": "GPT-4 Turbo with Vision model.",
+                          "capabilities": {
+                              "input": ["text", "image"],
+                              "output": ["text"]
+                          },
+                          "context_window": 128000,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Dec 2023"
+                      },
+                      "gpt-4-turbo-preview": {
+                          "description": "GPT-4 Turbo preview model.",
+                          "capabilities": {
+                              "input": ["text", "image"],
+                              "output": ["text"]
+                          },
+                          "context_window": 128000,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Dec 2023"
+                      },
+                      "gpt-4-0125-preview": {
+                          "description": "GPT-4 Turbo preview model intended to reduce cases of “laziness” where the model doesn’t complete a task.",
+                          "capabilities": {
+                              "input": ["text", "image"],
+                              "output": ["text"]
+                          },
+                          "context_window": 128000,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Dec 2023"
+                      },
+                      "gpt-4-1106-preview": {
+                          "description": "GPT-4 Turbo preview model featuring improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more.",
+                          "capabilities": {
+                              "input": ["text", "image"],
+                              "output": ["text"]
+                          },
+                          "context_window": 128000,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Apr 2023"
+                      }
+                  },
+                  "latest_snapshot": "gpt-4-turbo-2024-04-09"
+              },
+              "additional_info": "GPT-4 Turbo is optimized for chat but works well for traditional completions tasks."
+          },
+          "gpt-4": {
+              "description": "A large multimodal model that can solve difficult problems with greater accuracy than any of our previous models.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["text"]
+              },
+              "context_window": 8192,
+              "max_output_tokens": 8192,
+              "training_data": "Up to Sep 2021",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "High"
+              },
+              "versions": {
+                  "current": "gpt-4-0613",
+                  "history": {
+                      "gpt-4-0613": {
+                          "description": "Snapshot of gpt-4 from June 13th 2023 with improved function calling support.",
+                          "context_window": 8192,
+                          "max_output_tokens": 8192,
+                          "training_data": "Up to Sep 2021"
+                      },
+                      "gpt-4-0314": {
+                          "description": "Legacy Snapshot of gpt-4 from March 14th 2023.",
+                          "context_window": 8192,
+                          "max_output_tokens": 8192,
+                          "training_data": "Up to Sep 2021"
+                      }
+                  },
+                  "latest_snapshot": "gpt-4-0613"
+              },
+              "additional_info": "GPT-4 is multimodal and excels in complex reasoning tasks."
+          },
+          "gpt-3.5-turbo": {
+              "description": "A fast, inexpensive model for simple tasks.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["text"]
+              },
+              "context_window": 16385,
+              "max_output_tokens": 4096,
+              "training_data": "Up to Sep 2021",
+              "endpoint": "chat/completions",
+              "pricing": {
+                  "price_per_token": "Low"
+              },
+              "versions": {
+                  "current": "gpt-3.5-turbo-0125",
+                  "history": {
+                      "gpt-3.5-turbo-0125": {
+                          "description": "The latest GPT-3.5 Turbo model with higher accuracy at responding in requested formats and a fix for a bug which caused a text encoding issue for non-English language function calls.",
+                          "context_window": 16385,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Sep 2021"
+                      },
+                      "gpt-3.5-turbo-1106": {
+                          "description": "GPT-3.5 Turbo model with improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more.",
+                          "context_window": 16385,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Sep 2021"
+                      },
+                      "gpt-3.5-turbo-instruct": {
+                          "description": "Similar capabilities as GPT-3 era models. Compatible with legacy Completions endpoint and not Chat Completions.",
+                          "context_window": 4096,
+                          "max_output_tokens": 4096,
+                          "training_data": "Up to Sep 2021"
+                      }
+                  },
+                  "latest_snapshot": "gpt-3.5-turbo-0125"
+              },
+              "additional_info": "As of July 2024, gpt-4o-mini should be used in place of gpt-3.5-turbo, as it is cheaper, more capable, multimodal, and just as fast. gpt-3.5-turbo is still available for use in the API."
+          },
+          "dall-e": {
+              "description": "An AI system that can create realistic images and art from a description in natural language.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["image"]
+              },
+              "context_window": null,
+              "training_data": "N/A",
+              "endpoint": "images/generations",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "dall-e-3": {
+                      "description": "The latest DALL·E model released in Nov 2023.",
+                      "release_date": "Nov 2023",
+                      "additional_info": "Supports creating new images with specific sizes."
+                  },
+                  "dall-e-2": {
+                      "description": "The previous DALL·E model released in Nov 2022.",
+                      "release_date": "Nov 2022",
+                      "additional_info": "Supports editing existing images and creating variations with 4x greater resolution."
+                  }
+              },
+              "additional_info": "DALL·E models are available through the Images API and can be tried via ChatGPT Plus."
+          },
+          "tts": {
+              "description": "AI models that convert text into natural-sounding spoken audio.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["audio"]
+              },
+              "context_window": null,
+              "training_data": "N/A",
+              "endpoint": "audio/speech",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "tts-1": {
+                      "description": "The latest text to speech model, optimized for speed.",
+                      "additional_info": "Optimized for real-time text to speech use cases."
+                  },
+                  "tts-1-hd": {
+                      "description": "The latest text to speech model, optimized for quality.",
+                      "additional_info": "Optimized for high-quality text to speech use cases."
+                  }
+              },
+              "additional_info": "These models can be used with the Speech endpoint in the Audio API."
+          },
+          "whisper": {
+              "description": "A general-purpose speech recognition model capable of multilingual speech recognition, speech translation, and language identification.",
+              "capabilities": {
+                  "input": ["audio"],
+                  "output": ["text"]
+              },
+              "context_window": null,
+              "training_data": "N/A",
+              "endpoint": "audio/transcriptions",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "whisper-1": {
+                      "description": "Whisper v2-large model available through the API.",
+                      "additional_info": "Offers optimized inference process for faster performance compared to open-source versions."
+                  }
+              },
+              "additional_info": "No differences between open-source and API versions, except for optimized performance in the API."
+          },
+          "embeddings": {
+              "description": "Numerical representations of text used for measuring relatedness, useful in search, clustering, recommendations, anomaly detection, and classification.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["vector"]
+              },
+              "context_window": null,
+              "training_data": "N/A",
+              "endpoint": "embeddings",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "text-embedding-3-large": {
+                      "description": "Most capable embedding model for both English and non-English tasks.",
+                      "output_dimension": 3072
+                  },
+                  "text-embedding-3-small": {
+                      "description": "Increased performance over the 2nd generation ada embedding model.",
+                      "output_dimension": 1536
+                  },
+                  "text-embedding-ada-002": {
+                      "description": "Most capable 2nd generation embedding model, replacing 16 first-generation models.",
+                      "output_dimension": 1536
+                  }
+              },
+              "additional_info": "Read more about the latest embedding models in the announcement blog post."
+          },
+          "moderation": {
+              "description": "Models designed to check whether content complies with OpenAI's usage policies, classifying content into categories like hate, self-harm, sexual content, violence, etc.",
+              "capabilities": {
+                  "input": ["text", "image"],
+                  "output": ["classification"]
+              },
+              "context_window": null,
+              "training_data": "N/A",
+              "endpoint": "moderations",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "omni-moderation-latest": {
+                      "description": "Latest multi-modal moderation model capable of analyzing both text and images.",
+                      "max_tokens": 32768,
+                      "current_snapshot": "omni-moderation-2024-09-26"
+                  },
+                  "text-moderation-latest": {
+                      "description": "Latest text-only moderation model.",
+                      "max_tokens": 32768,
+                      "current_snapshot": "text-moderation-007"
+                  },
+                  "text-moderation-007": {
+                      "description": "Previous generation text-only moderation model.",
+                      "max_tokens": 32768,
+                      "additional_info": "We expect omni-moderation-* models to be the best default moving forward."
+                  }
+              },
+              "additional_info": "Learn more about moderating text and images in our moderation guide."
+          },
+          "gpt_base": {
+              "description": "GPT base models that can understand and generate natural language or code but are not trained with instruction following.",
+              "capabilities": {
+                  "input": ["text"],
+                  "output": ["text"]
+              },
+              "context_window": 16384,
+              "training_data": "Up to Sep 2021",
+              "endpoint": "completions",
+              "pricing": {
+                  "price_per_token": "Variable"
+              },
+              "versions": {
+                  "babbage-002": {
+                      "description": "Replacement for the GPT-3 ada and babbage base models.",
+                      "max_tokens": 16384,
+                      "training_data": "Up to Sep 2021"
+                  },
+                  "davinci-002": {
+                      "description": "Replacement for the GPT-3 curie and davinci base models.",
+                      "max_tokens": 16384,
+                      "training_data": "Up to Sep 2021"
+                  }
+              },
+              "additional_info": "Most customers should use GPT-3.5 or GPT-4."
+          },
+          "deprecated": {
+              "description": "A full list of models that have been deprecated along with the suggested replacements.",
+              "models": {
+                  "legacy_models": [
+                      "gpt-3.5-turbo-instruct",
+                      "babbage-002",
+                      "davinci-002",
+                      "text-moderation-007",
+                      "gpt-4-0314",
+                      "gpt-4-turbo-preview",
+                      "gpt-4-0125-preview"
+                  ],
+                  "suggested_replacements": {
+                      "gpt-3.5-turbo-instruct": "gpt-3.5-turbo",
+                      "babbage-002": "gpt_base -> babbage-002",
+                      "davinci-002": "gpt_base -> davinci-002",
+                      "text-moderation-007": "moderation -> text-moderation-latest",
+                      "gpt-4-0314": "gpt-4 -> gpt-4-0613",
+                      "gpt-4-turbo-preview": "gpt-4-turbo",
+                      "gpt-4-0125-preview": "gpt-4-turbo-2024-04-09"
+                  }
+              }
+          }
+      },
+      "continuous_model_upgrades": {
+          "description": "gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-4, and gpt-3.5-turbo point to their respective latest model versions.",
+          "details": {
+              "gpt-4o": {
+                  "current_version": "gpt-4o-2024-08-06",
+                  "notes": "gpt-4o points to the latest snapshot with support for Structured Outputs."
+              },
+              "gpt-4o-mini": {
+                  "current_version": "gpt-4o-mini-2024-07-18",
+                  "notes": "gpt-4o-mini points to the latest snapshot."
+              },
+              "gpt-4-turbo": {
+                  "current_version": "gpt-4-turbo-2024-04-09",
+                  "notes": "gpt-4-turbo points to the latest snapshot."
+              },
+              "gpt-4": {
+                  "current_version": "gpt-4-0613",
+                  "notes": "gpt-4 points to the latest snapshot."
+              },
+              "gpt-3.5-turbo": {
+                  "current_version": "gpt-3.5-turbo-0125",
+                  "notes": "gpt-3.5-turbo points to the latest snapshot."
+              },
+              "chatgpt-4o-latest": {
+                  "description": "Dynamic model continuously updated to the current version of GPT-4o used in ChatGPT.",
+                  "notes": "Not recommended for production use."
+              }
+          },
+          "additional_info": "For production use, OpenAI recommends using dated GPT models, which are optimized for API usage."
+      },
+      "open_source_models": {
+          "description": "We have also published open source models.",
+          "models": [
+              "Point-E",
+              "Whisper",
+              "Jukebox",
+              "CLIP"
+          ]
+      },
+      "how_we_use_your_data": {
+          "description": "Data usage policies for OpenAI API.",
+          "details": {
+              "general_policy": "Data sent to the OpenAI API will not be used to train or improve OpenAI models unless you explicitly opt-in.",
+              "data_retention": {
+                  "default_retention": "30 days",
+                  "zero_retention": "Available for specific endpoints and use-cases",
+                  "exceptions": [
+                      "Image inputs via certain models",
+                      "Schemas provided for Structured Outputs",
+                      "Audio outputs"
+                  ]
+              },
+              "production_customers": {
+                  "zero_data_retention_available": true,
+                  "description": "For trusted customers with sensitive applications, zero data retention may be available."
+              },
+              "api_endpoints_data_policies": {
+                  "/v1/chat/completions": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": true,
+                      "notes": "Certain image inputs and audio outputs are not eligible."
+                  },
+                  "/v1/assistants": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/images/generations": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/audio/transcriptions": {
+                      "data_used_for_training": false,
+                      "default_retention": "Zero",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/audio/translations": {
+                      "data_used_for_training": false,
+                      "default_retention": "Zero",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/audio/speech": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": true
+                  },
+                  "/v1/embeddings": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": true
+                  },
+                  "/v1/moderations": {
+                      "data_used_for_training": false,
+                      "default_retention": "Zero",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/completions": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": true
+                  },
+                  "/v1/realtime (beta)": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/fine_tuning/jobs": {
+                      "data_used_for_training": false,
+                      "default_retention": "Until deleted by customer",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/batches": {
+                      "data_used_for_training": false,
+                      "default_retention": "Until deleted by customer",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/files": {
+                      "data_used_for_training": false,
+                      "default_retention": "Until deleted by customer",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/threads": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/threads/messages": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/threads/runs": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/threads/runs/steps": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  },
+                  "/v1/vector_stores": {
+                      "data_used_for_training": false,
+                      "default_retention": "30 days",
+                      "eligible_for_zero_retention": false
+                  }
+              },
+              "additional_info": "For details, see our API data usage policies. To learn more about zero retention, get in touch with our sales team."
+          },
+          "model_endpoint_compatibility": {
+              "description": "Mapping of endpoints to their compatible latest models.",
+              "compatibility": {
+                  "/v1/assistants": ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo"],
+                  "/v1/audio/transcriptions": ["whisper-1"],
+                  "/v1/audio/translations": ["whisper-1"],
+                  "/v1/audio/speech": ["tts-1", "tts-1-hd"],
+                  "/v1/chat/completions": ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo"],
+                  "/v1/completions": ["gpt-3.5-turbo-instruct", "babbage-002", "davinci-002"],
+                  "/v1/embeddings": ["text-embedding-3-small", "text-embedding-3-large", "text-embedding-ada-002"],
+                  "/v1/fine_tuning/jobs": ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo", "babbage-002", "davinci-002"],
+                  "/v1/moderations": ["text-moderation-stable", "text-moderation-latest"],
+                  "/v1/images/generations": ["dall-e-2", "dall-e-3"],
+                  "/v1/realtime (beta)": ["gpt-4o-realtime-preview", "gpt-4o-realtime-preview-2024-10-01"]
+              },
+              "notes": "This list excludes all of our deprecated models."
+          }
       }
-    },
-    "reasoning_models": {
-      "o1-preview": {
-        "description": "Reasoning model for complex problems",
-        "context_window": 128000,
-        "max_output_tokens": 32768,
-        "multimodal": false,
-        "endpoint": "chat/completions"
-      },
-      "o1-mini": {
-        "description": "Reasoning model optimized for coding and math",
-        "context_window": 128000,
-        "max_output_tokens": 65536,
-        "multimodal": false,
-        "endpoint": "chat/completions"
-      }
-    },
-    "gpt_series": {
-      "gpt-4-turbo": {
-        "description": "GPT-4 Turbo with vision capabilities",
-        "context_window": 128000,
-        "max_output_tokens": 4096,
-        "multimodal": true,
-        "endpoint": "chat/completions"
-      },
-      "gpt-4": {
-        "description": "GPT-4 for advanced reasoning tasks",
-        "context_window": 8192,
-        "max_output_tokens": 8192,
-        "multimodal": true,
-        "endpoint": "chat/completions"
-      },
-      "gpt-3.5-turbo": {
-        "description": "Inexpensive model for simple tasks",
-        "context_window": 16385,
-        "max_output_tokens": 4096,
-        "multimodal": false,
-        "endpoint": "chat/completions"
-      }
-    },
-    "image_models": {
-      "dall-e-3": {
-        "description": "Image generation model",
-        "context_window": null,
-        "multimodal": true,
-        "endpoint": "images/generations"
-      },
-      "dall-e-2": {
-        "description": "Second generation image generation model",
-        "context_window": null,
-        "multimodal": true,
-        "endpoint": "images/generations"
-      }
-    },
-    "audio_models": {
-      "tts-1": {
-        "description": "Real-time text to speech model",
-        "context_window": null,
-        "audio_output": true,
-        "endpoint": "audio/speech"
-      },
-      "tts-1-hd": {
-        "description": "High-quality text to speech model",
-        "context_window": null,
-        "audio_output": true,
-        "endpoint": "audio/speech"
-      },
-      "whisper-1": {
-        "description": "General-purpose speech recognition",
-        "context_window": null,
-        "audio_input": true,
-        "endpoint": "audio/transcriptions"
-      }
-    },
-    "embedding_models": {
-      "text-embedding-3-large": {
-        "description": "Advanced embedding model for English and non-English tasks",
-        "output_dimension": 3072,
-        "endpoint": "embeddings"
-      },
-      "text-embedding-3-small": {
-        "description": "Performance-optimized embedding model",
-        "output_dimension": 1536,
-        "endpoint": "embeddings"
-      },
-      "text-embedding-ada-002": {
-        "description": "Second generation embedding model",
-        "output_dimension": 1536,
-        "endpoint": "embeddings"
-      }
-    },
-    "moderation_models": {
-      "omni-moderation-latest": {
-        "description": "Multi-modal moderation model",
-        "context_window": 32768,
-        "endpoint": "moderations"
-      },
-      "text-moderation-latest": {
-        "description": "Text-only moderation model",
-        "context_window": 32768,
-        "endpoint": "moderations"
-      }
-    },
-    "base_models": {
-      "babbage-002": {
-        "description": "Base model replacement for GPT-3 ada and babbage",
-        "context_window": 16384,
-        "endpoint": "completions"
-      },
-      "davinci-002": {
-        "description": "Base model replacement for GPT-3 curie and davinci",
-        "context_window": 16384,
-        "endpoint": "completions"
-      }
-    }
   }
 }
