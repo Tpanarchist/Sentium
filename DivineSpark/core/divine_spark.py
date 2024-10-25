@@ -82,8 +82,11 @@ class DivineSpark:
         model = self.model_loader.load_model(self.api_type, model_name)
         model_details = self.model_registry.get_model(self.api_type, model_name)
 
-        if model_details.get("multimodal"):
-            print(f"Multimodal model '{model_name}' is loaded and ready.")
+        if model_details.get("capabilities", {}).get("output") == ["text"] and "image" in model_details.get("capabilities", {}).get("input", []):
+            print(f"Multimodal model '{model_name}' is loaded and ready for text and image inputs.")
+
+        elif model_details.get("capabilities", {}).get("input") == ["audio"] and model_details.get("capabilities", {}).get("output") == ["text"]:
+            print(f"Audio model '{model_name}' is loaded and ready for audio to text transcription.")
 
         return model
 
@@ -96,7 +99,8 @@ class DivineSpark:
         """
         try:
             self.model_registry.load_from_file(config_file)
-            print(f"Loaded models: {list(self.model_registry.models[self.api_type].keys())}")
+            loaded_models = list(self.model_registry.models[self.api_type].keys())
+            print(f"Loaded models: {loaded_models}")
         except Exception as e:
             print(f"Error loading models from file: {e}")
 
@@ -120,7 +124,8 @@ class DivineSpark:
         if not model_details:
             raise ValueError(f"Model '{model_name}' is not registered.")
 
-        if model_details.get("endpoint") != "chat/completions":
+        endpoint = self.model_loader.get_endpoint(self.api_type, model_name)
+        if endpoint != "chat/completions":
             raise ValueError(f"Model '{model_name}' is not compatible with text completions.")
 
         return self.api_client.generate_completion(prompt, model_name, max_tokens)

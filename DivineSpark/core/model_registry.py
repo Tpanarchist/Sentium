@@ -28,7 +28,7 @@ class ModelRegistry:
             models = {
                 api: {
                     name: details for name, details in api_models.items()
-                    if isinstance(details, dict) and details.get("multimodal") == filter_multimodal
+                    if isinstance(details, dict) and details.get("capabilities", {}).get("input") and any(input_type in ["text", "image"] for input_type in details["capabilities"].get("input", [])) and details.get("capabilities", {}).get("output") and "text" in details["capabilities"]["output"] and details.get("capabilities", {}).get("output") != "audio"
                 }
                 for api, api_models in models.items()
             }
@@ -37,7 +37,7 @@ class ModelRegistry:
             models = {
                 api: {
                     name: details for name, details in api_models.items()
-                    if isinstance(details, dict) and (details.get("audio_input") == filter_audio or details.get("audio_output") == filter_audio)
+                    if isinstance(details, dict) and details.get("capabilities", {}).get("input") and "audio" in details["capabilities"]["input"]
                 }
                 for api, api_models in models.items()
             }
