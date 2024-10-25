@@ -3,6 +3,7 @@
         "arxiv",
         "dall",
         "davinci",
+        "levelname",
         "LIDA",
         "metacognition",
         "moderations",
@@ -12,6 +13,7 @@
         "Sentium",
         "stopwords",
         "subcat",
-        "subcats"
+        "subcats",
+        "uncompatible"
     ]
 }
