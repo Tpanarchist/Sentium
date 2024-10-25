@@ -1,90 +1,140 @@
-import os
-import unittest
-from unittest.mock import patch
-from DivineSpark.core.divine_spark import DivineSpark
-from DivineSpark.core.utils import Utils
+# DivineSpark/tests/test_divine_spark.py
 
+import unittest
+from unittest.mock import patch, Mock
+from DivineSpark.core.divine_spark import DivineSpark
+import os
+import requests  # Importing requests to handle exceptions
 
 class TestDivineSpark(unittest.TestCase):
     def setUp(self):
-        # Retrieve the API key from environment variables
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        """
+        Initializes the DivineSpark instance with test API key and configuration file.
+        """
+        # Load API key from environment variable
+        self.api_key = os.getenv('OPENAI_API_KEY')
         if not self.api_key:
-            raise ValueError("Missing OpenAI API Key. Please set the OPENAI_API_KEY environment variable.")
+            self.fail("OPENAI_API_KEY environment variable not set.")
         
-        self.api_type = "openai"
-        self.spark = DivineSpark(self.api_key, self.api_type)
+        # Path to models_config.json relative to this test file
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'models_config.json')
+        print(f"Loading models from configuration file at '{config_path}'.")
+        self.spark = DivineSpark(api_key=self.api_key, api_type='openai', config_file=config_path)
 
-        # Load OpenAI model configuration from file
-        self.config_file = 'DivineSpark/config/models_config.json'
-        if Utils.file_exists(self.config_file):
-            self.models_config = Utils.load_from_json(self.config_file).get("openai", {})
-        else:
-            raise FileNotFoundError(f"Configuration file not found: {self.config_file}")
-
-        # Register models
-        required_models = {
-            "gpt-4o": {
-                "description": "Test model",
-                "context_window": 128000,
-                "max_output_tokens": 16384,
-                "supports_text_completion": True
-            },
-            "dall-e-3": {
-                "description": "Image generation model",
-                "multimodal": True,
-                "supports_image_generation": True
-            },
-            "whisper-1": {
-                "description": "Speech-to-text model",
-                "audio_input": True,
-                "supports_audio_transcription": True
-            }
-        }
-
-        for model_name, model_details in required_models.items():
-            self.spark.register_model(model_name, model_details)
-
-    @patch('requests.Session.post')
-    def test_generate_text_completion(self, mock_post):
-        # Mock a successful completion response
-        mock_post.return_value.json.return_value = {
-            "model": "gpt-4o-2024-08-06",
-            "choices": [{"message": {"role": "assistant", "content": "Mocked response"}}]
-        }
-        mock_post.return_value.status_code = 200
-
-        prompt = "Test prompt"
-        result = self.spark.generate_text_completion(prompt, model_name="gpt-4o", max_tokens=10)
-        self.assertIn("model", result)
-        self.assertEqual(result["model"], "gpt-4o-2024-08-06")
-
-    @patch('requests.Session.post')
+    @patch('DivineSpark.apis.openai_client.requests.post')
     def test_generate_image(self, mock_post):
-        # Mock a successful image generation response
-        mock_post.return_value.json.return_value = {
-            "created": 1729772286,
-            "data": [
-                {"url": "https://example.com/image.png"}
-            ]
-        }
-        mock_post.return_value.status_code = 200
+        """
+        Tests the generate_image method for successful image generation.
+        """
+        prompt = "A sunset over mountains."
+        print(f"Testing generate_image with prompt: '{prompt}'.")
+        
+        # Mock API response
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"data": [{"url": "https://example.com/image.png"}]}
+        mock_post.return_value = mock_response
 
-        prompt = "Generate a futuristic city skyline"
-        result = self.spark.generate_image(prompt, model_name="dall-e-3")
-        self.assertIn("data", result)
-        self.assertGreater(len(result["data"]), 0)
-        self.assertIn("url", result["data"][0])
+        try:
+            result = self.spark.generate_image(prompt, model_name="dall-e-3")
+            self.assertIsNotNone(result, "generate_image returned None.")
+            self.assertIn("data", result)
+            self.assertEqual(result["data"][0]["url"], "https://example.com/image.png")
+            print("generate_image test passed.")
+        except ValueError as e:
+            self.fail(f"generate_image raised ValueError unexpectedly: {e}")
+        except requests.exceptions.HTTPError as e:
+            self.fail(f"generate_image raised HTTPError: {e}")
 
-    @patch('requests.Session.post')
+    @patch('DivineSpark.apis.openai_client.requests.post')
+    def test_generate_text_completion(self, mock_post):
+        """
+        Tests the generate_text_completion method for successful text generation.
+        """
+        prompt = "Once upon a time"
+        print(f"Testing generate_text_completion with prompt: '{prompt}'.")
+        
+        # Mock API response
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"choices": [{"message": {"content": "Test completion"}}]}
+        mock_post.return_value = mock_response
+
+        try:
+            result = self.spark.generate_text_completion(prompt, model_name="gpt-4o", max_tokens=10)
+            self.assertIsNotNone(result, "generate_text_completion returned None.")
+            self.assertIn("choices", result)
+            self.assertEqual(result["choices"][0]["message"]["content"], "Test completion")
+            print("generate_text_completion test passed.")
+        except ValueError as e:
+            self.fail(f"generate_text_completion raised ValueError unexpectedly: {e}")
+        except requests.exceptions.HTTPError as e:
+            self.fail(f"generate_text_completion raised HTTPError: {e}")
+
+    @patch('DivineSpark.apis.openai_client.requests.post')
     def test_transcribe_audio(self, mock_post):
-        # Mock a successful audio transcription response
-        mock_post.return_value.json.return_value = {
-            "text": "Transcribed audio content"
-        }
-        mock_post.return_value.status_code = 200
-
+        """
+        Tests the transcribe_audio method for successful audio transcription.
+        """
         audio_model_name = "whisper-1"
-        result = self.spark.transcribe_audio("test_audio_file.wav", model_name=audio_model_name)
-        self.assertIn("text", result)
-        self.assertEqual(result["text"], "Transcribed audio content")
+        # Path to the dummy audio file
+        audio_file_path = os.path.join(os.path.dirname(__file__), 'test_audio_file.wav')
+        print(f"Testing transcribe_audio with audio file: '{audio_file_path}'.")
+
+        # Create a dummy audio file for testing purposes if it doesn't exist
+        if not os.path.exists(audio_file_path):
+            with open(audio_file_path, 'wb') as f:
+                f.write(b'\x00\x00\x00')  # Dummy content
+            print(f"Created dummy audio file at '{audio_file_path}' for testing.")
+
+        # Mock API response
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"text": "Transcribed text"}
+        mock_post.return_value = mock_response
+
+        try:
+            result = self.spark.transcribe_audio(audio_file_path, model_name=audio_model_name)
+            self.assertIsNotNone(result, "transcribe_audio returned None.")
+            self.assertIn("text", result)
+            self.assertEqual(result["text"], "Transcribed text")
+            print("transcribe_audio test passed.")
+        except ValueError as e:
+            self.fail(f"transcribe_audio raised ValueError unexpectedly: {e}")
+        except requests.exceptions.HTTPError as e:
+            self.fail(f"transcribe_audio raised HTTPError: {e}")
+
+    @patch('DivineSpark.apis.openai_client.requests.post')
+    def test_handle_unauthorized_error(self, mock_post):
+        """
+        Tests handling of unauthorized (401) error response.
+        """
+        prompt = "Hello, world!"
+        model_name = "gpt-4o"
+        max_tokens = 10
+
+        # Mock API response to simulate unauthorized error
+        mock_response = Mock()
+        mock_response.status_code = 401
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError("401 Client Error: Unauthorized for url")
+        mock_post.return_value = mock_response
+
+        with self.assertRaises(requests.exceptions.HTTPError):
+            self.spark.generate_text_completion(prompt, model_name, max_tokens)
+        mock_post.assert_called_once()
+
+    def tearDown(self):
+        """
+        Cleans up the dummy audio file after tests to prevent PermissionError.
+        """
+        # Path to the dummy audio file
+        audio_file_path = os.path.join(os.path.dirname(__file__), 'test_audio_file.wav')
+        if os.path.exists(audio_file_path):
+            try:
+                os.remove(audio_file_path)
+                print(f"Removed dummy audio file at '{audio_file_path}' after testing.")
+            except PermissionError as e:
+                print(f"PermissionError while trying to remove '{audio_file_path}': {e}")
+
+if __name__ == '__main__':
+    unittest.main()
