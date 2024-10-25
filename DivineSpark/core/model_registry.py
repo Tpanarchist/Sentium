@@ -47,7 +47,7 @@ class ModelRegistry:
 
     def load_from_file(self, filepath):
         try:
-            with open(filepath, 'r') as file:
+            with open(filepath, 'r', encoding='utf-8') as file:
                 config_data = json.load(file)
                 for api_name, categories in config_data.items():
                     for category_name, models in categories.items():
@@ -56,12 +56,14 @@ class ModelRegistry:
             print(f"All models loaded successfully from '{filepath}'.")
         except FileNotFoundError:
             raise FileNotFoundError(f"The configuration file at '{filepath}' was not found.")
-        except json.JSONDecodeError:
-            raise ValueError("Invalid JSON format in the configuration file.")
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON format in the configuration file: {e}")
+        except UnicodeDecodeError as e:
+            raise UnicodeDecodeError(f"Unicode decoding error in the configuration file: {e}")
 
     def save_to_file(self, filepath):
         try:
-            with open(filepath, 'w') as file:
+            with open(filepath, 'w', encoding='utf-8') as file:
                 json.dump(self.models, file, indent=4)
             print(f"Model configurations saved successfully to '{filepath}'.")
         except IOError as e:
